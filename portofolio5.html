@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,900&family=Unbounded:wght@900&family=Caveat:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2d4a3e;
+            --accent: #f7a028;
+            --bg: #f4ecee;
+            --white: #ffffff;
+            --font-main: 'Inter', sans-serif;
+            --font-head: 'Unbounded', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-main); background: var(--bg); color: #1a1a1a; overflow-x: hidden; }
+
+        /* --- INPUT PANEL --- */
+        #input-form {
+            max-width: 800px; margin: 50px auto; background: var(--white);
+            padding: 40px; border: 3px solid var(--primary);
+            box-shadow: 15px 15px 0px var(--accent);
+        }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-family: var(--font-head); font-size: 0.8rem; }
+        input, textarea { 
+            width: 100%; padding: 12px; border: 2px solid #ddd; 
+            font-family: inherit; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); }
+        .build-btn { 
+            width: 100%; padding: 20px; background: var(--primary); 
+            color: white; border: none; font-family: var(--font-head);
+            cursor: pointer; letter-spacing: 2px;
+        }
+
+        /* --- PORTFOLIO VIEW (Hidden by default) --- */
+        #portfolio-content { display: none; padding: 20px; max-width: 1100px; margin: 0 auto; }
+
+        .page {
+            background: var(--primary); display: grid; grid-template-columns: 1fr 1fr;
+            min-height: 600px; margin-bottom: 30px; overflow: hidden;
+        }
+
+        /* Hero */
+        .hero-left { padding: 40px; display: flex; align-items: center; justify-content: center; }
+        .hero-img { 
+            width: 80%; height: 80%; background: #ccc; border: 8px solid white;
+            clip-path: polygon(5% 0%, 100% 5%, 95% 100%, 0% 95%);
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-right { padding: 60px 40px; color: white; }
+        .display-name { font-family: var(--font-head); font-size: 4.5rem; line-height: 0.8; text-transform: uppercase; }
+
+        /* Resume Section */
+        .resume-page { background: var(--bg); color: var(--primary); padding: 50px; gap: 40px; }
+        .res-header { font-family: var(--font-head); font-size: 2.5rem; border-bottom: 4px solid var(--accent); margin-bottom: 25px; }
+        .res-item { border-left: 3px solid var(--primary); padding-left: 20px; margin-bottom: 20px; }
+        .res-date { 
+            background: var(--accent); color: black; padding: 3px 10px; 
+            font-family: var(--font-head); font-size: 0.8rem; display: inline-block;
+            clip-path: polygon(2% 0%, 100% 5%, 98% 100%, 0% 95%); margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) { .page { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div id="input-form">
+        <h2 style="font-family: var(--font-head); margin-bottom: 20px; color: var(--primary);">Portfolio Ma'lumotlarini Kiriting</h2>
+        
+        <div class="form-group">
+            <label>To'liq ismingiz</label>
+            <input type="text" id="in-name" placeholder="Masalan: DILROZBEGIM">
+        </div>
+
+        <div class="form-group">
+            <label>Mutaxassisligingiz</label>
+            <input type="text" id="in-job" placeholder="Masalan: Frontend Developer">
+        </div>
+
+        <div class="form-group">
+            <label>Profil rasmi (URL)</label>
+            <input type="text" id="in-img" placeholder="Rasm linkini kiriting">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+                <label>Ta'lim (Yil, Muassasa)</label>
+                <textarea id="in-edu" rows="4" placeholder="2023-2026: Renessans University"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Tajriba (Yil, Loyiha)</label>
+                <textarea id="in-exp" rows="4" placeholder="2026: Greenlife Project"></textarea>
+            </div>
+        </div>
+
+        <button class="build-btn" onclick="generate()">PORTFOLIONI YARATISH</button>
+    </div>
+
+    <div id="portfolio-content">
+        <div class="page">
+            <div class="hero-left">
+                <div class="hero-img" id="out-img-box"></div>
+            </div>
+            <div class="hero-right">
+                <p style="font-family: var(--font-head); color: var(--accent);">HI! I'M</p>
+                <h1 class="display-name" id="out-name">NAME</h1>
+                <p id="out-job" style="margin-top:20px; font-style: italic; font-size: 1.5rem;"></p>
+            </div>
+        </div>
+
+        <div class="page resume-page">
+            <div>
+                <h2 class="res-header">Education</h2>
+                <div id="out-edu"></div>
+            </div>
+            <div>
+                <h2 class="res-header">Experience</h2>
+                <div id="out-exp"></div>
+            </div>
+        </div>
+
+        <button onclick="location.reload()" style="padding:10px; background:var(--accent); border:none; cursor:pointer; font-weight:bold;">Tahrirlashga qaytish</button>
+    </div>
+
+    <script>
+        function generate() {
+            // Qiymatlarni olish
+            const name = document.getElementById('in-name').value || "Ism kiritilmagan";
+            const job = document.getElementById('in-job').value || "Developer";
+            const imgUrl = document.getElementById('in-img').value || "https://via.placeholder.com/400x500";
+            const eduRaw = document.getElementById('in-edu').value;
+            const expRaw = document.getElementById('in-exp').value;
+
+            // Ism va Kasbni joylash
+            document.getElementById('out-name').innerHTML = name.replace(" ", "<br>");
+            document.getElementById('out-job').innerText = job;
+            document.getElementById('out-img-box').innerHTML = `<img src="${imgUrl}" alt="Profile">`;
+
+            // Ta'lim ro'yxatini shakllantirish
+            const eduHtml = eduRaw.split('\n').map(line => {
+                const parts = line.split(':');
+                return `<div class="res-item">
+                    <span class="res-date">${parts[0] || 'Yil'}</span>
+                    <p><strong>${parts[1] || line}</strong></p>
+                </div>`;
+            }).join('');
+            document.getElementById('out-edu').innerHTML = eduHtml;
+
+            // Tajriba ro'yxatini shakllantirish
+            const expHtml = expRaw.split('\n').map(line => {
+                const parts = line.split(':');
+                return `<div class="res-item">
+                    <span class="res-date">${parts[0] || 'Yil'}</span>
+                    <p><strong>${parts[1] || line}</strong></p>
+                </div>`;
+            }).join('');
+            document.getElementById('out-exp').innerHTML = expHtml;
+
+            // Panellarni almashtirish
+            document.getElementById('input-form').style.display = 'none';
+            document.getElementById('portfolio-content').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

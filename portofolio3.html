@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,900&family=Unbounded:wght@900&family=Caveat:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #944a63; 
+            --bg-light: #f4ecee; 
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Playfair Display', serif;
+            --font-hand: 'Caveat', cursive;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-main); background: var(--bg-light); color: var(--black); overflow-x: hidden; }
+
+        /* --- TEXTURE --- */
+        .texture-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cfilter id="grain"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23grain)" opacity="0.07"/%3E%3C/svg%3E');
+            pointer-events: none; z-index: 9999;
+        }
+
+        /* --- INPUT PANEL --- */
+        #input-panel {
+            max-width: 600px; margin: 50px auto; background: var(--white); padding: 40px;
+            border: 2px solid var(--black); box-shadow: 10px 10px 0px var(--primary);
+        }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 0.9rem; color: var(--primary); }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; font-family: inherit; }
+        .btn-build { width: 100%; padding: 15px; background: var(--black); color: white; border: none; cursor: pointer; font-weight: 900; letter-spacing: 2px; transition: 0.3s; }
+        .btn-build:hover { background: var(--primary); }
+
+        /* --- PORTFOLIO VIEW --- */
+        #portfolio-view { display: none; }
+        .page {
+            max-width: 1100px; margin: 40px auto; background: var(--primary); 
+            min-height: 600px; position: relative; overflow: hidden;
+            display: grid; grid-template-columns: 1fr 1fr;
+        }
+
+        /* Hero Section */
+        .hero-left { background: var(--primary); padding: 40px; display: flex; align-items: center; justify-content: center; }
+        .hero-img-wrap { 
+            width: 85%; height: 85%; background: #eee; 
+            clip-path: polygon(2% 0%, 100% 5%, 95% 100%, 0% 92%);
+            border: 8px solid var(--white); overflow: hidden;
+        }
+        .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-right { background: var(--primary); color: var(--white); padding: 60px 40px; position: relative; }
+        .meet-the { font-size: 1.5rem; font-weight: 900; background: var(--black); display: inline-block; padding: 5px 15px; margin-bottom: 10px; }
+        .artist-title { font-family: var(--font-heading); font-size: 6rem; line-height: 0.8; text-transform: uppercase; border-bottom: 4px solid var(--white); padding-bottom: 10px; }
+        .creative-tag { font-family: var(--font-hand); font-size: 2.5rem; transform: rotate(-5deg); margin-top: 30px; display: block; }
+
+        /* --- ABOUT SECTION (ALOHIDA) --- */
+        .about-section {
+            max-width: 1100px; margin: 40px auto; background: var(--white);
+            padding: 80px 60px; border-left: 15px solid var(--primary);
+        }
+        .about-section h2 { font-size: 5rem; font-weight: 900; margin-bottom: 20px; text-transform: lowercase; }
+        .about-content { font-size: 1.2rem; line-height: 1.8; color: #333; max-width: 800px; }
+        .handwritten { font-family: var(--font-hand); font-size: 4rem; color: var(--primary); margin-top: 20px; }
+
+        /* --- PROJECTS SECTION (ALOHIDA) --- */
+      /* --- PROJECTS SECTION (YANGILANGAN) --- */
+.projects-section {
+    max-width: 1200px; /* Kattaroq ekran uchun kenglik */
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.projects-grid {
+    display: grid;
+    /* Qatorda aniq 3 ta rasm bo'lishi uchun: */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; /* Rasmlar orasidagi masofa */
+}
+
+.strip-img { 
+    width: 100%; 
+    aspect-ratio: 1 / 1; /* Rasm kvadrat shaklda bo'ladi */
+    background: #ddd; 
+    border: 12px solid white; /* Ramkani biroz qalinlashtirdik */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.strip-img:hover { 
+    transform: translateY(-10px) rotate(1deg) scale(1.02); 
+    z-index: 10;
+}
+
+.strip-img img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block;
+}
+
+/* Telefonlar uchun (kichik ekranlarda 1 yoki 2 ta bo'lib qolishi uchun) */
+@media (max-width: 900px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        /* Contact */
+        .contact-page { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            text-align: center; background: #944a63; color: white; padding: 100px 20px;
+        }
+        .contact-page h1 { font-size: 6rem; font-family: var(--font-heading); }
+
+        @media (max-width: 768px) {
+            .page { grid-template-columns: 1fr; }
+            .artist-title, .about-section h2 { font-size: 3.5rem; }
+            .contact-page h1 { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="texture-overlay"></div>
+
+    <div id="input-panel">
+        <h2 style="font-family: 'Playfair Display'; margin-bottom: 30px; border-bottom: 2px solid var(--black);">Portfolio Builder</h2>
+        
+        <div class="input-group">
+            <label>To'liq ismingiz</label>
+            <input type="text" id="fullname" placeholder="E.g. Brooke White">
+        </div>
+
+        <div class="input-group">
+            <label>Kasbingiz</label>
+            <input type="text" id="job" placeholder="E.g. Creative Artist">
+        </div>
+
+        <div class="input-group">
+            <label>O'zingiz haqida</label>
+            <textarea id="about" rows="4" placeholder="Qisqacha bio..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>Shaxsiy rasm</label>
+            <input type="file" id="personal-imgs" accept="image/*">
+        </div>
+
+        <div class="input-group">
+            <label>Loyihalar rasmlari (bir nechta)</label>
+            <input type="file" id="project-imgs" accept="image/*" multiple>
+        </div>
+
+        <button class="btn-build" onclick="buildPortfolio()">PORTFOLIONI YARATISH</button>
+    </div>
+
+    <div id="portfolio-view">
+        <div class="page">
+            <div class="hero-left">
+                <div class="hero-img-wrap" id="main-photo-box"></div>
+            </div>
+            <div class="hero-right">
+                <p class="meet-the">meet the</p>
+                <h1 class="artist-title" id="out-fullname">* ARTIST</h1>
+                <span class="creative-tag" id="out-job">* creative soul</span>
+                <p style="position:absolute; bottom: 40px; right: 40px; font-family: var(--font-hand); font-size: 2.5rem;" id="out-name-sign"></p>
+            </div>
+        </div>
+
+
+
+        <div class="projects-section">
+            <div style="text-align: center;"><h2 class="projects-header">selected works</h2></div>
+            <div class="projects-grid" id="project-strip">
+                </div>
+        </div>
+        <div class="about-section">
+            <h2>hello!</h2>
+            <div class="about-content" id="out-about"></div>
+            <p class="handwritten">about my self</p>
+        </div>
+        <div class="contact-page">
+            <p style="font-family: var(--font-hand); font-size: 3rem; margin-bottom: 20px;">Thank You</p>
+            <h1 id="out-footer-name">NAME</h1>
+            <button onclick="window.print()" style="margin-top: 40px; padding: 15px 30px; background: white; border:none; cursor:pointer; font-weight: 900; text-transform: uppercase;">PDF SAQLASH</button>
+        </div>
+    </div>
+
+    <script>
+        function buildPortfolio() {
+            const pFiles = document.getElementById('personal-imgs').files;
+            const projFiles = document.getElementById('project-imgs').files;
+
+            if(pFiles.length === 0 || projFiles.length === 0) {
+                alert("Iltimos, rasmlarni yuklang!");
+                return;
+            }
+
+            const name = document.getElementById('fullname').value || "Ism Familiya";
+            const job = document.getElementById('job').value || "Creative Professional";
+            const about = document.getElementById('about').value || "Bu yerda sizning bio ma'lumotingiz bo'ladi...";
+
+            // Matnlarni to'ldirish
+            document.getElementById('out-job').innerText = `* ${job}`;
+            document.getElementById('out-name-sign').innerText = name;
+            document.getElementById('out-about').innerText = about;
+            document.getElementById('out-footer-name').innerText = name.split(' ')[0].toUpperCase();
+
+            // Shaxsiy rasm
+            const reader1 = new FileReader();
+            reader1.onload = e => {
+                document.getElementById('main-photo-box').innerHTML = `<img src="${e.target.result}" alt="Personal">`;
+            };
+            reader1.readAsDataURL(pFiles[0]);
+
+            // Loyiha rasmlari
+            const projectStrip = document.getElementById('project-strip');
+            projectStrip.innerHTML = ''; 
+
+            Array.from(projFiles).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const div = document.createElement('div');
+                    div.className = 'strip-img';
+                    div.innerHTML = `<img src="${e.target.result}">`;
+                    projectStrip.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Ko'rinishni almashtirish
+            document.getElementById('input-panel').style.display = 'none';
+            document.getElementById('portfolio-view').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>

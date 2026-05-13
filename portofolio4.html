@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stacey Wang | Creative Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,900&family=Unbounded:wght@900&family=Caveat:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #944a63; /* Image_0.png dan olingan Burgundy/marun rang */
+            --bg-light: #f4ecee; /* Image_0.png dan olingan krem rang */
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --pink-accent: #ffb8d9; /* Image_1.png dan olingan och pushti urg'u */
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Unbounded', sans-serif; /* Retro jasur sans-serif (image_0.png H1) */
+            --font-serif: 'Playfair Display', serif; /* O'ynoqi serif */
+            --font-hand: 'Caveat', cursive; /* Retro qo'lyozma */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-main); background: var(--bg-light); color: var(--black); overflow-x: hidden; }
+
+        /* --- HALFTONE & GRAIN TEXTURE (image_0.png dan saqlangan) --- */
+        .texture-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cfilter id="grain"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23grain)" opacity="0.07"/%3E%3C/svg%3E');
+            pointer-events: none; z-index: 9999;
+        }
+
+        /* --- INPUT PANEL (Faqat tarkib uchun saqlangan) --- */
+        #input-panel {
+            max-width: 600px; margin: 100px auto; background: var(--white); padding: 40px;
+            border: 2px solid var(--black); box-shadow: 10px 10px 0px var(--primary);
+        }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; font-family: inherit; }
+        .btn-build { width: 100%; padding: 15px; background: var(--black); color: white; border: none; cursor: pointer; font-weight: 900; letter-spacing: 2px; }
+
+        /* --- PORTFOLIO PAGES --- */
+        #portfolio-view { display: none; }
+        .page {
+            max-width: 1000px; margin: 20px auto; background: var(--primary); 
+            min-height: 600px; position: relative; overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1); display: grid; grid-template-columns: 1fr 1fr;
+        }
+
+        /* --- PAGE 1: Sarlavha (Stacey Wang) --- */
+        .hero-left { position: relative; background: var(--primary); padding: 40px; display: flex; align-items: center; justify-content: center; }
+        .hero-img-wrap { 
+            width: 80%; height: 80%; background: #ccc; 
+            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 95%); /* Yirtilgan effekt (image_0.png) */
+            border: 5px solid var(--white); overflow: hidden;
+        }
+        .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+
+        .hero-right { background: var(--primary); color: var(--white); padding: 40px; position: relative; }
+        .new-here { font-family: var(--font-hand); font-size: 2.5rem; color: var(--white); transform: rotate(-5deg); margin-bottom: 10px; display: block; }
+        .artist-title { font-family: var(--font-heading); font-size: 5rem; line-height: 0.8; text-transform: uppercase; border-bottom: 4px solid var(--white); margin-top: 20px; }
+        .sub-tag { font-family: var(--font-serif); font-size: 1.2rem; color: var(--white); margin-top: 10px; display: block; text-transform: lowercase; }
+        
+        .star-icon { position: absolute; font-size: 5rem; bottom: 20px; left: 40px; transform: rotate(15deg); color: var(--white); }
+
+        /* --- PAGE 2: Hayot Tarixi (Vaqt Chizig'i) --- */
+        .page-white { background: var(--white); color: var(--black); grid-template-columns: 1fr; padding: 50px; }
+        .life-story { display: flex; flex-direction: column; align-items: center; gap: 40px; text-align: center; }
+        .timeline { display: flex; width: 100%; justify-content: space-between; position: relative; margin-top: 20px; }
+        .timeline::before { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: var(--black); z-index: 0; }
+        
+        .timeline-event { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; z-index: 1; text-align: center; width: 30%; }
+        .timeline-photo-box { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--primary); overflow: hidden; background: #ddd; position: relative; clip-path: polygon(10% 0%, 100% 10%, 90% 100%, 0% 90%); /* Vintage yirtilgan effekt */ }
+        .timeline-photo-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+        .timeline-text { font-family: var(--font-hand); font-size: 1.5rem; color: var(--primary); }
+        .timeline-tag { font-size: 1rem; color: var(--black); font-weight: bold; }
+
+        /* --- PAGE 3: Vizual & Vibe --- */
+        .vibe-content { padding: 40px; color: var(--white); display: flex; flex-direction: column; gap: 20px; text-align: center; }
+        .vibe-header { font-family: var(--font-heading); font-size: 4rem; text-transform: uppercase; color: var(--white); line-height: 0.9; }
+        .vibe-text { font-family: var(--font-serif); font-size: 2rem; color: var(--pink-accent); font-style: italic; }
+
+        /* Mundarija/So'z qidirish (image_1.png dan moslashtirilgan) */
+        .word-search { 
+            display: grid; grid-template-columns: repeat(8, 1fr); 
+            gap: 5px; background: var(--primary); padding: 20px; color: var(--white);
+            font-family: monospace; font-size: 1.2rem; text-align: center; border: 2px solid var(--white); border-radius: 20px;
+        }
+        .highlight { border: 2px solid var(--white); border-radius: 20px; font-weight: bold; color: var(--pink-accent); }
+
+        /* --- PAGE 4: Mahorat Kollaji --- */
+        .skills-page { background: var(--white); padding: 50px; }
+        .skills-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
+        .skills-left { display: flex; flex-direction: column; gap: 30px; }
+        .skills-title { font-family: var(--font-heading); font-size: 4rem; text-transform: uppercase; color: var(--primary); }
+        
+        /* Mahorat tarmoqlari (image_1.png dan moslashtirilgan) */
+        .skills-tarmoq { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .skills-box { width: 100%; aspect-ratio: 1; background: #ddd; border: 2px solid #ccc; clip-path: polygon(5% 0%, 100% 5%, 95% 100%, 0% 95%); /* Vintage effekt */ overflow: hidden; }
+        .skills-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+
+        .skills-text-box { background: var(--primary); color: var(--white); padding: 20px; border-radius: 10px; font-size: 1.1rem; line-height: 1.6; }
+        
+        .skills-right { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .skills-phone-box { width: 100%; max-width: 150px; aspect-ratio: 9/19; background: #eee; border: 4px solid var(--black); border-radius: 20px; overflow: hidden; clip-path: polygon(5% 0%, 100% 5%, 95% 100%, 0% 95%); /* Vintage effekt */ }
+        .skills-phone-box img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+
+        /* --- FOOTER: Xayrlashuv (Rahmat) --- */
+        .contact-page { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--primary); color: white; padding: 100px 0; min-height: 400px; }
+        .wrap-title { font-family: var(--font-heading); font-size: 6rem; text-transform: uppercase; color: var(--pink-accent); line-height: 0.9; margin-top: 20px; }
+        .contact-text { font-family: var(--font-serif); font-size: 2rem; color: var(--white); font-style: italic; margin-bottom: 30px; }
+
+        @media (max-width: 768px) {
+            .page { grid-template-columns: 1fr; }
+            .artist-title, .vibe-header, .skills-title, .wrap-title { font-size: 3rem; }
+            .timeline { flex-direction: column; gap: 20px; align-items: center; }
+            .timeline::before { width: 2px; height: 100%; top: 0; left: 50%; transform: translateX(-50%); }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+
+        .controls { position: fixed; bottom: 20px; right: 20px; z-index: 10000; }
+    </style>
+</head>
+<body>
+
+    <div class="texture-overlay"></div>
+
+    <div id="input-panel">
+        <h2 style="font-family: var(--font-heading); margin-bottom: 20px; color: var(--primary);">Dizayn Sozlamalari (Stacey Wang)</h2>
+        <input type="text" id="fullname" placeholder="Ismingiz (e.g. Stacey Wang)">
+        <input type="text" id="job" placeholder="Kasbingiz (e.g. Graphic Designer / Video Editor)">
+        <label>Rasmlar (Sarlavha, 11yosh, O'spirin, Mahorat kollaji)</label>
+        <input type="file" id="imgs" multiple accept="image/*">
+        <button class="btn-build" onclick="buildPortfolio()">PORTFOLIONI YARATISH</button>
+    </div>
+
+    <div id="portfolio-view">
+        <div class="page">
+            <div class="hero-left">
+                <div class="hero-img-wrap" id="box-0"></div>
+                <div class="star-icon">★</div>
+            </div>
+            <div class="hero-right">
+                <p class="new-here">Hi. Since you're new here.</p>
+                <h1 class="artist-title">STACEY<br>WANG</h1>
+                <p class="sub-tag" id="out-job">graphic designer / video editor</p>
+                <p style="position:absolute; bottom: 40px; right: 40px; font-family: var(--font-hand); font-size: 2rem;" id="out-name-sign">Stacey Wang</p>
+            </div>
+        </div>
+
+        <div class="page page-white">
+            <div class="life-story">
+                <h2 style="font-family: var(--font-heading); font-size: 3rem; text-transform: uppercase; color: var(--primary);">History & Teen Life</h2>
+                <div class="timeline">
+                    <div class="timeline-event">
+                        <div class="timeline-photo-box" id="box-1"></div>
+                        <p class="timeline-tag">Childhood</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-photo-box" id="box-2"></div>
+                        <p class="timeline-tag">Age 11</p>
+                        <p class="timeline-text">Youtuber</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-photo-box" id="box-3"></div>
+                        <p class="timeline-tag">Teenager</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" style="grid-template-columns: 1fr 1fr;">
+            <div class="vibe-content">
+                <p class="new-here">Content. Creative.</p>
+                <h1 class="vibe-header">Visuals.<br>Vibe.<br>Aesthetics.</h1>
+                <p class="vibe-text">It's not just editing,<br>it's vibing with visuals.</p>
+            </div>
+            <div style="padding: 40px;">
+                <div class="word-search">
+                    <span>H</span><span class="highlight">I</span><span>.</span><span>I</span><span>T</span><span>'</span><span>S</span>
+                    <span class="highlight">D</span><span class="highlight">E</span><span class="highlight">S</span><span class="highlight">I</span><span class="highlight">G</span><span class="highlight">N</span>
+                    <span class="highlight">S</span><span class="highlight">T</span><span class="highlight">A</span><span class="highlight">C</span><span class="highlight">E</span><span class="highlight">Y</span>
+                    <span class="highlight">W</span><span class="highlight">A</span><span class="highlight">N</span><span class="highlight">G</span><span>&</span><span>C</span><span>O</span>
+                    <span>T</span><span>H</span><span>A</span><span>T</span><span>V</span><span>I</span><span>B</span><span>E</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page skills-page">
+            <div class="skills-grid">
+                <div class="skills-left">
+                    <h1 class="skills-title">Skills & Works</h1>
+                    <div class="skills-tarmoq">
+                        <div class="skills-box" id="box-4"></div>
+                        <div class="skills-box" id="box-5"></div>
+                        <div class="skills-box" id="box-6"></div>
+                        <div class="skills-box" id="box-7"></div>
+                        <div class="skills-box" id="box-8"></div>
+                        <div class="skills-box" id="box-9"></div>
+                    </div>
+                    <div class="skills-text-box">
+                        <p><strong>Graphic Design / Video Editor</strong></p>
+                        <p>I focus on creating compelling visual narratives that resonate with Gen Z. It's not about the technicalities, it's about the feeling.</p>
+                    </div>
+                </div>
+                <div class="skills-right">
+                    <div class="skills-phone-box" id="box-10"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-page">
+            <p class="contact-text">thank you so much.</p>
+            <h1 class="wrap-title">and that's a wrap.</h1>
+            <p style="font-family: var(--font-hand); font-size: 2rem; margin-top: 20px;">By Stacey Wang</p>
+            <button onclick="window.print()" style="margin-top: 30px; padding: 10px 20px; background: white; border:none; cursor:pointer; font-weight: bold; color: var(--primary);">PDF YUKLASH</button>
+        </div>
+    </div>
+
+    <script>
+        function buildPortfolio() {
+            const files = document.getElementById('imgs').files;
+            if(files.length < 8) { alert("Kamida 8 ta rasm yuklang (Sarlavha, Tarixchilik, 11yosh, O'spirin, Mahorat kollaji)"); return; }
+
+            const name = document.getElementById('fullname').value || "Stacey Wang";
+            const job = document.getElementById('job').value || "Graphic Designer / Video Editor";
+
+            document.getElementById('out-job').innerText = job;
+            document.getElementById('out-name-sign').innerText = name;
+
+            // Rasmlarni joylashtirish (image_0.png uslubida, lekin image_1.png tarkibiga mos)
+            const reader = new FileReader();
+            
+            // Hero Image
+            const reader0 = new FileReader();
+            reader0.onload = e => {
+                document.getElementById('box-0').innerHTML = `<img src="${e.target.result}">`;
+            };
+            reader0.readAsDataURL(files[0]);
+
+            // Timeline Images
+            const timelineBoxes = ['box-1', 'box-2', 'box-3'];
+            for(let i=1; i<4; i++) {
+                const readerT = new FileReader();
+                readerT.onload = e => {
+                    document.getElementById(timelineBoxes[i-1]).innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+                };
+                readerT.readAsDataURL(files[i]);
+            }
+
+            // Skills Grid Images
+            const skillsBoxes = ['box-4', 'box-5', 'box-6', 'box-7', 'box-8', 'box-9'];
+            for(let i=4; i<10; i++) {
+                const readerS = new FileReader();
+                readerS.onload = e => {
+                    document.getElementById(skillsBoxes[i-4]).innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+                };
+                readerS.readAsDataURL(files[i]);
+            }
+
+            // Phone Box Image
+            const readerP = new FileReader();
+            readerP.onload = e => {
+                document.getElementById('box-10').innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+            };
+            readerP.readAsDataURL(files[10] || files[0]); // Agar 11 rasm bo'lmasa, sarlavha rasmini ishlatish
+
+            document.getElementById('input-panel').style.display = 'none';
+            document.getElementById('portfolio-view').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

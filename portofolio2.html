@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Ultra Portfolio | Professional Website</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Unbounded:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/PptxGenJS@3.10.0/dist/pptxgen.bundle.js"></script>
+    
+    <style>
+        :root {
+            --accent: #3A47FF;
+            --black: #111111;
+            --white: #FFFFFF;
+            --grey: #F5F5F5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #1a1a1a; color: var(--black); overflow-x: hidden; }
+
+        /* --- INPUT PANEL --- */
+        #input-panel {
+            max-width: 850px; margin: 50px auto; background: #fff; padding: 40px;
+            border-radius: 30px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); color: #000;
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full { grid-column: span 2; }
+        label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px; color: #777; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #EEE; border-radius: 12px; background: #F9F9F9; outline: none; font-family: inherit; }
+        .btn-build { width: 100%; padding: 20px; background: var(--black); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; margin-top: 30px; font-size: 16px; transition: 0.3s; }
+        .btn-build:hover { background: var(--accent); }
+
+        /* --- PORTFOLIO VIEW --- */
+        #portfolio-view { display: none; background: #1a1a1a; padding-bottom: 100px; }
+
+        /* Har bir slayd PPTX (16:9) formatiga mos o'lchamda bo'ladi */
+        .pptx-slide {
+            width: 1280px; height: 720px;
+            background: var(--white); margin: 40px auto;
+            position: relative; overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        }
+
+        /* 1-sahifa: HERO */
+        .hero-layout { display: grid; grid-template-columns: 1.2fr 1fr; height: 100%; }
+        .hero-left { padding: 80px 60px; display: flex; flex-direction: column; justify-content: center; }
+        .hero-right { background: var(--grey); overflow: hidden; }
+        .hero-right img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .h-name-tag { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; border-bottom: 2px solid var(--black); align-self: flex-start; padding-bottom: 5px; }
+        .h-title { font-family: 'Unbounded'; font-size: 130px; line-height: 0.8; margin: 0; }
+        .h-creative { font-family: 'Playfair Display'; font-size: 60px; color: var(--accent); font-style: italic; margin-top: -15px; margin-left: 30px; }
+
+        /* 2-sahifa: SELECTED WORKS (Grid) */
+        .black-slide { background: var(--black); color: var(--white); padding: 60px; }
+        .grid-header { font-family: 'Unbounded'; font-size: 40px; margin-bottom: 40px; color: var(--accent); }
+        .works-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        .grid-img { height: 260px; width: 100%; object-fit: cover; border-radius: 8px; }
+
+        /* 3-sahifa: PROJECT DETAILS (Matn + Rasm) */
+        .detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; padding: 80px 60px; align-items: center; }
+        .detail-info h3 { font-family: 'Unbounded'; font-size: 45px; margin-bottom: 20px; line-height: 1.1; }
+        .detail-info p { font-size: 20px; color: #666; line-height: 1.6; }
+        .detail-img { width: 100%; height: 500px; object-fit: cover; border-radius: 4px; }
+
+        /* 4-sahifa: CONTACT */
+        .contact-layout { height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--black); color: #fff; }
+        .c-title { font-family: 'Unbounded'; font-size: 80px; }
+        .c-accent { font-family: 'Unbounded'; font-size: 110px; color: var(--accent); margin-top: -20px; }
+        .c-info { margin-top: 50px; font-size: 22px; letter-spacing: 2px; font-weight: 700; }
+
+        /* CONTROLS */
+        .controls { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 9999; }
+        .btn-float { padding: 15px 35px; background: var(--accent); color: white; border-radius: 50px; border: none; cursor: pointer; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-transform: uppercase; font-size: 12px; }
+
+        /* Responsivlik (faqat ko'rish uchun) */
+        @media (max-width: 1300px) {
+            #portfolio-view { transform: scale(0.6); transform-origin: top center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="input-panel">
+        <h2 style="font-family: 'Unbounded'; font-size: 1.8rem; margin-bottom: 30px; border-bottom: 3px solid #000; padding-bottom: 10px;">Portfolio Architect</h2>
+        <div class="form-grid">
+            <div class="full"><label>Ism va Familiya</label><input type="text" id="fullname" value="DILROZBEGIM SHUKRILLAYEVA"></div>
+            <div><label>Shaxsiy rasm (Asosiy sahifa)</label><input type="file" id="user-img" accept="image/*"></div>
+            <div><label>Loyiha rasmlari (10 tagacha)</label><input type="file" id="project-imgs" multiple accept="image/*"></div>
+            <div class="full"><label>Loyiha nomlari (vergul bilan)</label><textarea id="projects" rows="2">Greenlife, Sushi Master, Digital Art</textarea></div>
+            <div><label>Telefon raqam</label><input type="text" id="phone" value="+998 94 303 61 68"></div>
+            <div><label>Tug'ilgan yil</label><input type="text" id="dob" value="2005"></div>
+        </div>
+        <button class="btn-build" onclick="buildPortfolio()">SAYTNI GENERATSIYA QILISH</button>
+    </div>
+
+    <div id="portfolio-view">
+        
+        <div class="pptx-slide" id="s1">
+            <div class="hero-layout">
+                <div class="hero-left">
+                    <div class="h-name-tag" id="out-hero-name">DILROZBEGIM SHUKRILLAYEVA</div>
+                    <h1 class="h-title">PORT<br>FOLIO</h1>
+                    <div class="h-creative">Creative</div>
+                </div>
+                <div class="hero-right" id="hero-img-box">
+                    </div>
+            </div>
+        </div>
+
+        <div class="pptx-slide black-slide" id="s2">
+            <h2 class="grid-header">SELECTED WORKS</h2>
+            <div class="works-grid" id="grid-box">
+                </div>
+        </div>
+
+        <div id="dynamic-details"></div>
+
+        <div class="pptx-slide" id="s-last">
+            <div class="contact-layout">
+                <h2 class="c-title">LET'S WORK</h2>
+                <h2 class="c-accent">TOGETHER.</h2>
+                <div class="c-info">
+                    <p id="out-phone">+998 94 303 61 68</p>
+                    <p id="out-final-name" style="color: #555; margin-top: 10px;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-float" id="dl-btn" onclick="downloadAsPPTX()">PPTX YUKLASH (SCREENSHOT)</button>
+            <button class="btn-float" onclick="location.reload()" style="background:#444;">ORQAGA</button>
+        </div>
+    </div>
+
+    <script>
+        let pNamesGlobal = [];
+
+        function buildPortfolio() {
+            const name = document.getElementById('fullname').value;
+            const phone = document.getElementById('phone').value;
+            pNamesGlobal = document.getElementById('projects').value.split(',').map(s => s.trim());
+
+            document.getElementById('out-hero-name').innerText = name.toUpperCase();
+            document.getElementById('out-final-name').innerText = name;
+            document.getElementById('out-phone').innerText = phone;
+
+            // 1. Shaxsiy rasm yuklash
+            const userImg = document.getElementById('user-img').files[0];
+            if (userImg) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('hero-img-box').innerHTML = `<img src="${e.target.result}">`;
+                };
+                reader.readAsDataURL(userImg);
+            }
+
+            // 2. Loyiha rasmlarini yuklash va taqsimlash
+            const projFiles = document.getElementById('project-imgs').files;
+            const gridBox = document.getElementById('grid-box');
+            const detailsDiv = document.getElementById('dynamic-details');
+            
+            gridBox.innerHTML = "";
+            detailsDiv.innerHTML = "";
+
+            Array.from(projFiles).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const imgUrl = e.target.result;
+
+                    // Gridga qo'shish (faqat 4 tasini gridga qo'yamiz)
+                    if (index < 4) {
+                        gridBox.innerHTML += `<img src="${imgUrl}" class="grid-img">`;
+                    }
+
+                    // Loyiha detal sahifalarini yaratish
+                    if (pNamesGlobal[index]) {
+                        detailsDiv.innerHTML += `
+                            <div class="pptx-slide">
+                                <div class="detail-layout">
+                                    <div class="detail-info">
+                                        <h3>${pNamesGlobal[index]}</h3>
+                                        <p>Ushbu loyiha maxsus vizual kontent va strategiya asosida ishlab chiqilgan bo'lib, brendingning barcha editorial talablariga javob beradi.</p>
+                                    </div>
+                                    <img src="${imgUrl}" class="detail-img">
+                                </div>
+                            </div>
+                        `;
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            document.getElementById('input-panel').style.display = 'none';
+            document.getElementById('portfolio-view').style.display = 'block';
+        }
+
+        async function downloadAsPPTX() {
+            const btn = document.getElementById('dl-btn');
+            btn.innerText = "YUKLANMOQDA...";
+            btn.disabled = true;
+
+            const pptx = new PptxGenJS();
+            pptx.layout = 'LAYOUT_WIDE'; // 16:9
+
+            // Barcha slayd elementlarini tanlaymiz
+            const slides = document.querySelectorAll('.pptx-slide');
+
+            for (let i = 0; i < slides.length; i++) {
+                const slideEl = slides[i];
+
+                // html2canvas orqali sahifani "rasmga tushiramiz"
+                const canvas = await html2canvas(slideEl, {
+                    scale: 2, // Sifatni oshirish uchun
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: null
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+                
+                // PPTX ga slayd qo'shish va rasmni butun sahifaga joylash
+                let slide = pptx.addSlide();
+                slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
+            }
+
+            const name = document.getElementById('fullname').value.replace(/\s+/g, '_');
+            pptx.writeFile({ fileName: `Portfolio_${name}.pptx` }).then(() => {
+                btn.innerText = "PPTX YUKLASH (SCREENSHOT)";
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>

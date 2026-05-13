@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dilrozbegim Portfolio | Premium Creator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
+
+        :root {
+            --bg-black: #0d0d0d;
+            --accent-orange: #ff5c00;
+            --text-white: #ffffff;
+            --gray-text: #888888;
+            --card-bg: #1a1a1a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg-black); color: var(--text-white); overflow-x: hidden; }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 8%; position: absolute; width: 100%; z-index: 100;
+        }
+        .logo { font-size: 24px; font-weight: 800; letter-spacing: -1px; }
+        .nav-links a { color: var(--text-white); text-decoration: none; margin-left: 30px; font-size: 14px; opacity: 0.8; }
+        .btn-touch {
+            background: var(--text-white); color: black; padding: 12px 25px;
+            border-radius: 50px; font-weight: bold; text-decoration: none; font-size: 14px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh; position: relative; display: flex; align-items: center;
+            background: radial-gradient(circle at 70% 30%, #ff5c0033 0%, #0d0d0d 60%);
+            padding: 0 8%;
+        }
+
+        .hero-text { width: 55%; z-index: 2; }
+        .hero-text h4 { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+        .hero-text h1 { font-size: 90px; line-height: 0.9; font-weight: 800; margin-bottom: 30px; }
+        
+        /* Image Upload Box */
+        .image-container {
+            position: absolute; right: 8%; width: 35%; height: 80%;
+            background: var(--card-bg); border-radius: 40px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            border: 2px dashed rgba(255, 92, 0, 0.3); transition: 0.3s;
+        }
+        .image-container:hover { border-color: var(--accent-orange); }
+        .image-container img { width: 100%; height: 100%; object-fit: cover; display: none; }
+        .upload-placeholder { text-align: center; color: var(--gray-text); }
+
+        /* Stats & Services Row */
+        .services-row {
+            display: flex; justify-content: space-between; padding: 60px 8%;
+            background: #111; border-top: 1px solid #222;
+        }
+        .service-item span { color: var(--accent-orange); font-weight: bold; display: block; }
+        .service-item p { font-size: 14px; color: var(--gray-text); margin-top: 5px; }
+
+        /* About & Projects */
+        .content-section { padding: 100px 8%; }
+        .section-flex { display: flex; gap: 100px; align-items: flex-start; }
+        .side-title { color: var(--accent-orange); font-size: 18px; font-weight: bold; width: 200px; }
+        .main-content { flex: 1; }
+        .main-content h2 { font-size: 45px; margin-bottom: 30px; line-height: 1.2; }
+        .main-content p { color: var(--gray-text); font-size: 18px; line-height: 1.6; margin-bottom: 40px; }
+
+        /* Project Cards */
+        .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
+        .project-card { 
+            background: var(--card-bg); border-radius: 20px; overflow: hidden; 
+            transition: 0.4s; text-decoration: none; color: white;
+        }
+        .project-card:hover { transform: translateY(-10px); }
+        .project-thumb { width: 100%; height: 250px; background: #222; position: relative; }
+        .project-info { padding: 25px; }
+        .project-info h4 { font-size: 20px; margin-bottom: 5px; }
+        .project-info p { color: var(--gray-text); font-size: 14px; }
+
+        /* Download PDF Button */
+        .pdf-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--accent-orange); color: white; padding: 15px 30px;
+            border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-text h1 { font-size: 60px; }
+            .section-flex { flex-direction: column; gap: 30px; }
+            .project-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Folioblox.</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Projects</a>
+            <a href="mailto:dilrozbegim928@gmail.com" class="btn-touch">Get in touch</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h4>Hey, I'm a</h4>
+            <h1>Web <br>Developer</h1>
+            <p style="color: var(--gray-text); max-width: 400px; margin-bottom: 40px;">
+                Menga dizayn va san’atga oid barcha narsa yoqadi. Men muammolarga rasional va pragmatik yondashaman. [cite: 116]
+            </p>
+            <div class="skills" style="display: flex; gap: 20px;">
+                <div class="skill-item"><b style="color: var(--accent-orange)">#01</b> UI/UX Design</div>
+                <div class="skill-item"><b style="color: var(--accent-orange)">#02</b> Frontend Dev</div>
+            </div>
+        </div>
+
+        <div class="image-container" onclick="document.getElementById('imgInput').click()">
+            <div class="upload-placeholder" id="placeholder">
+                <p>O'z rasmingizni yuklash uchun bosing</p>
+                <small>(Porto4 uslubida)</small>
+            </div>
+            <img id="profileImg" src="" alt="Profile">
+            <input type="file" id="imgInput" hidden accept="image/*" onchange="previewImage(this)">
+        </div>
+    </section>
+
+    <div class="services-row">
+        <div class="service-item"><span>TG</span><p>@dilroz2005</p></div>
+        <div class="service-item"><span>IG</span><p>dillow.ada</p></div>
+        <div class="service-item"><span>GH</span><p>Dicode</p></div>
+        <div class="service-item"><span>LC</span><p>Tashkent, UZ</p></div>
+    </div>
+
+    <section class="content-section">
+        <div class="section-flex">
+            <div class="side-title">Behind the Designs</div>
+            <div class="main-content">
+                <h2>Hayotni osonlashtiradigan raqamli tajribalarni shakllantirish</h2>
+                <p>
+                    Men Dilrozbegim Shukrillayeva, frontend dasturchiman. [cite: 96, 97] 
+                    Foydalanuvchilar uchun toza, intuitiv interfeyslar yaratishga va real hayotdagi muammolarni hal qilishga e'tibor qarataman. [cite: 116]
+                </p>
+                
+                <a href="#" class="pdf-btn" onclick="alert('PDF faylni serverga biriktirishingiz kerak')">
+                    Yuklab olish (PDF CV)
+                </a>
+            </div>
+        </div>
+
+        <div class="project-grid">
+            <a href="https://dilrozbegim.github.io/Greenlife/" class="project-card">
+                <div class="project-thumb"></div>
+                <div class="project-info">
+                    <h4>Greenlife Project</h4>
+                    <p>Ekologiya va qayta ishlash platformasi [cite: 161]</p>
+                </div>
+            </a>
+            <a href="https://dilrozbegim.github.io/mask-game/" class="project-card">
+                <div class="project-thumb"></div>
+                <div class="project-info">
+                    <h4>Mask Game</h4>
+                    <p>Interaktiv JavaScript o'yini [cite: 162]</p>
+                </div>
+            </a>
+            <div class="project-card">
+                <div class="project-thumb"></div>
+                <div class="project-info">
+                    <h4>Renessans Assistant</h4>
+                    <p>O'quv tizimlari uchun Web yechim [cite: 147]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImg').src = e.target.result;
+                    document.getElementById('profileImg').style.display = 'block';
+                    document.getElementById('placeholder').style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Creator Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Unbounded:wght@700;900&family=Playfair+Display:ital,wght@0,900;1,900&family=Inter:wght@400;700&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #2d4a3e;
+            --accent-blue: #b4cee4;
+            --highlight: #f7a028;
+            --cream: #f4ecee;
+            --white: #ffffff;
+            --black: #1a1a1a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f0f0; color: var(--black); }
+
+        /* --- ADMIN PANEL --- */
+        #setup-form {
+            max-width: 800px; margin: 40px auto; background: white; padding: 40px;
+            border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .form-section { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        h3 { margin-bottom: 15px; font-family: 'Unbounded'; font-size: 1rem; color: var(--primary-bg); }
+        input, textarea { width: 100%; padding: 12px; margin-top: 8px; border: 2px solid #ddd; border-radius: 10px; font-family: inherit; }
+        .file-group { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .generate-btn { 
+            width: 100%; padding: 20px; background: var(--primary-bg); color: white; 
+            border: none; border-radius: 12px; font-family: 'Unbounded'; cursor: pointer; transition: 0.3s;
+        }
+        .generate-btn:hover { background: var(--highlight); transform: translateY(-3px); }
+
+        /* --- PORTFOLIO SECTIONS --- */
+        #portfolio-view { display: none; }
+        .section { width: 100%; min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+
+        .hero { background: var(--primary-bg); color: white; }
+        .hero-img-container { width: 80%; height: 80%; border: 12px solid white; clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 90%); overflow: hidden; }
+        .hero-img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .hero-text { font-family: 'Unbounded'; font-size: 5rem; line-height: 0.8; text-transform: uppercase; }
+
+        .stats-section { background: var(--accent-blue); }
+        .stat-card { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; width: 80%; margin-bottom: 10px; font-family: 'Anton'; font-size: 2rem; display: flex; justify-content: space-between; }
+
+        .about-section { background: var(--cream); }
+        .script-font { font-family: 'Shadows Into Light', cursive; font-size: 2rem; color: var(--highlight); }
+
+        .skills-section { background: var(--white); grid-template-columns: 1fr; padding: 100px; }
+        .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+        .skill-item { padding: 20px; border: 2px solid var(--primary-bg); text-align: center; font-family: 'Unbounded'; font-size: 0.8rem; }
+
+        .projects-section { background: var(--black); color: white; grid-template-columns: 1fr; padding: 50px; }
+        .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 30px; }
+        .project-card { aspect-ratio: 4/5; background: #333; overflow: hidden; border-radius: 10px; }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        .exp-section { background: var(--highlight); padding: 80px; grid-template-columns: 1fr; }
+        .exp-item { border-left: 4px solid var(--black); padding-left: 30px; margin-bottom: 30px; position: relative; font-size: 1.2rem; }
+        .exp-item::before { content: '✦'; position: absolute; left: -14px; top: 0; font-size: 1.5rem; }
+
+        .services-section { background: var(--primary-bg); color: white; }
+        .footer { background: var(--white); grid-template-columns: 1fr; text-align: center; padding: 100px; min-height: 50vh !important; }
+
+        .flex-center { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
+
+        @media (max-width: 800px) { .section { grid-template-columns: 1fr; } .hero-text { font-size: 3rem; } }
+
+        /* PDF (PRINT) SOZLAMALARI */
+        @media print {
+            #setup-form, .no-print { display: none !important; }
+            body { background: white !important; }
+            .section { page-break-after: always; height: 100vh !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="setup-form">
+        <h2 style="font-family: 'Unbounded'; margin-bottom: 30px; text-align: center;">CREATOR STUDIO</h2>
+        
+        <div class="form-section">
+            <h3>1. Shaxsiy Ma'lumotlar</h3>
+            <div class="file-group">
+                <input type="text" id="name" placeholder="Ismingiz (masalan: Dilrozbegim)">
+                <input type="text" id="job" placeholder="Kasbingiz (masalan: Web Developer)">
+            </div>
+            <textarea id="about" placeholder="O'zingiz haqingizda qisqacha..."></textarea>
+        </div>
+
+        <div class="form-section">
+            <h3>2. Rasmlarni yuklang</h3>
+            <div class="file-group">
+                <div>
+                    <label style="font-size: 0.8rem;">Profil rasmi</label>
+                    <input type="file" id="userPhotos" accept="image/*">
+                </div>
+                <div>
+                    <label style="font-size: 0.8rem;">Loyiha rasmlari (6 tagacha)</label>
+                    <input type="file" id="projectPhotos" multiple accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>3. Statistika va Tajriba</h3>
+            <input type="text" id="stats" placeholder="Telegram: @user, Instagram: @user">
+            <textarea id="exp" placeholder="Har bir tajribani yangi qatordan yozing..."></textarea>
+        </div>
+
+        <button class="generate-btn" onclick="startBuilding()">PORTFOLIONI TAYYORLASH</button>
+    </div>
+
+    <div id="portfolio-view">
+        <section class="section hero">
+            <div class="flex-center"><div class="hero-img-container" id="hero-img-place"></div></div>
+            <div class="flex-center">
+                <h1 class="hero-text" id="out-name">NAME</h1>
+                <p class="script-font" style="color: white; margin-top: 20px;" id="out-job"></p>
+            </div>
+        </section>
+
+                <section class="section projects-section">
+            <h2 class="hero-text" style="text-align: center; font-size: 3rem;">Portfolio / Projects</h2>
+            <div class="project-grid" id="out-projects"></div>
+        </section>
+
+        <section class="section stats-section">
+            <div class="flex-center"><h2 class="hero-text" style="color: white; font-size: 3rem;">SOCIAL<br>REACH</h2></div>
+            <div class="flex-center" id="out-stats"></div>
+        </section>
+
+        <section class="section about-section">
+            <div class="flex-center"><p class="script-font">Who is she?</p><h2 class="hero-text" style="font-size: 3rem;" id="out-name-2"></h2></div>
+            <div class="flex-center"><p id="out-about" style="line-height: 2; font-size: 1.1rem; padding: 20px;"></p></div>
+        </section>
+
+
+        <section class="section exp-section">
+            <h2 class="hero-text" style="margin-bottom: 40px;">Experience</h2>
+            <div id="out-exp" style="width: 80%;"></div>
+        </section>
+
+        <section class="section services-section">
+            <div class="flex-center"><h2 class="hero-text" style="font-size: 4rem;">Services</h2></div>
+            <div class="flex-center">
+                <div style="font-size: 1.5rem; line-height: 3; font-family: 'Unbounded';">
+                    ✦ UGC CONTENT<br>
+                    ✦ BRAND DESIGN<br>
+                    ✦ WEB SOLUTIONS
+                </div>
+            </div>
+        </section>
+
+        <section class="section footer">
+            <h1 class="hero-text" style="color: var(--highlight);">LET'S WORK</h1>
+            <p style="margin-top: 20px;">Contact me for collaborations</p>
+            <div class="no-print" style="margin-top: 40px; display: flex; gap: 20px; justify-content: center;">
+                <button onclick="location.reload()" style="padding: 15px 30px; cursor: pointer; border-radius: 10px; border: 2px solid black; background: white; font-weight: bold;">TAHRIRLASH</button>
+                <button onclick="window.print()" style="padding: 15px 30px; cursor: pointer; border-radius: 10px; border: none; background: var(--primary-bg); color: white; font-weight: bold;">📄 PDF YUKLASH</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function startBuilding() {
+            const userPhotos = document.getElementById('userPhotos').files;
+            const projectPhotos = document.getElementById('projectPhotos').files;
+            const nameVal = document.getElementById('name').value || "DILROZBEGIM";
+
+            // Matnlarni to'ldirish
+            document.getElementById('out-name').innerText = nameVal;
+            document.getElementById('out-name-2').innerText = nameVal;
+            document.getElementById('out-job').innerText = document.getElementById('job').value || "Web Developer";
+            document.getElementById('out-about').innerText = document.getElementById('about').value || "Men professional web dizayner va dasturchiman.";
+
+            // Statistika
+            const statsInput = document.getElementById('stats').value;
+            const statsDisplay = document.getElementById('out-stats');
+            if(statsInput) {
+                const statsArr = statsInput.split(',');
+                statsDisplay.innerHTML = statsArr.map(s => {
+                    const part = s.split(':');
+                    return `<div class="stat-card"><span>${part[0].trim()}</span><span style="color:white">${part[1] ? part[1].trim() : ''}</span></div>`;
+                }).join('');
+            } else {
+                statsDisplay.innerHTML = '<div class="stat-card"><span>Telegram</span><span style="color:white">@dilroz2005</span></div>';
+            }
+
+            // Tajriba
+            const expInput = document.getElementById('exp').value;
+            const expDisplay = document.getElementById('out-exp');
+            if(expInput) {
+                expDisplay.innerHTML = expInput.split('\n').map(e => e.trim() ? `<div class="exp-item">${e}</div>` : '').join('');
+            }
+
+            // Profil rasmi
+            if(userPhotos[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('hero-img-place').innerHTML = `<img src="${e.target.result}">`;
+                };
+                reader.readAsDataURL(userPhotos[0]);
+            }
+
+            // Loyiha rasmlari
+            const projectGrid = document.getElementById('out-projects');
+            projectGrid.innerHTML = '';
+            Array.from(projectPhotos).slice(0, 6).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const div = document.createElement('div');
+                    div.className = 'project-card';
+                    div.innerHTML = `<img src="${e.target.result}">`;
+                    projectGrid.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Ko'rinishni almashtirish
+            document.getElementById('setup-form').style.display = 'none';
+            document.getElementById('portfolio-view').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>

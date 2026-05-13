@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium PPTX Generator - 10 Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+
+    <style>
+        :root {
+            --bg: #F4F4F4;
+            --white: #FFFFFF;
+            --text: #1A1A1A;
+            --accent: #FF5C00; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background:#F2E6EE; color: var(--text); }
+
+        #input-panel {
+            max-width: 700px; margin: 50px auto; background: var(--white); padding: 40px;
+            border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full { grid-column: span 2; }
+        label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; color: #666; }
+        input, textarea { width: 100%; padding: 16px; border: 1px solid #EEE; border-radius: 12px; background: #F9F9F9; outline: none; font-family: inherit; }
+        .btn-build { width: 100%; padding: 20px; background: var(--text); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; margin-top: 25px; transition: 0.3s; }
+        .btn-build:hover { background: #bdb0f5; }
+
+        #portfolio-view { display: none; padding-bottom: 100px; }
+        .slide {
+            width: 1100px; height: 618px; 
+            margin: 40px auto; background: var(--white);
+            position: relative; overflow: hidden; display: flex;
+            box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+        }
+
+        .intro-slide { background: white; color: black; justify-content: center; align-items: center; text-align: center; flex-direction: column; }
+        .main-name { font-family: 'Playfair Display', serif; font-size: 100px; line-height: 1; text-transform: uppercase; margin-bottom: 20px; }
+
+        .about-slide { display: grid; grid-template-columns: 1fr 1fr; }
+        .text-box { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .img-box { background: #eee; position: relative; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .proj-slide { flex-direction: column; padding: 50px; }
+        .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; height: 100%; margin-top: 20px; }
+        .proj-card { border-radius: 20px; overflow: hidden; background: #f9f9f9; border: 1px solid #eee; height: 400px; }
+        .proj-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        .controls { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 1000; }
+        .btn-ppt { padding: 18px 45px; background: var(--accent); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 10px 30px rgba(255,92,0,0.4); }
+    </style>
+</head>
+<body>
+
+    <div id="input-panel">
+        <h2 style="margin-bottom: 30px; font-family: 'Playfair Display'; font-size: 2rem;">Portofolio maker</h2>
+        <div class="form-grid">
+            <div class="full"><label>Ism Familiya</label><input type="text" id="fullname" placeholder="Dilrozbegim Shukrillayeva"></div>
+            <div class="full"><label>About Me</label><textarea id="about" rows="3" placeholder="Ma'lumotlaringizni kiriting..."></textarea></div>
+            <div><label>O'qish joyi</label><input type="text" id="edu" placeholder="Universitet joyingiz"></div>
+            <div><label>Tug'ilgan sana</label><input type="text" id="dob" placeholder="yil.oy.sana"></div>
+            <div><label>Profil rasmi</label><input type="file" id="p-img" accept="image/*"></div>
+            <div><label>Loyiha rasmlari (10 tagacha)</label><input type="file" id="proj-imgs" multiple accept="image/*"></div>
+        </div>
+        <button class="btn-build" onclick="buildPreview()">PREVIEW YARATISH</button>
+    </div>
+
+    <div id="portfolio-view">
+        <div class="slide intro-slide">
+            <h1 class="main-name" id="out-name">NAME</h1>
+            <div style="width: 100px; height: 2px; background: var(--accent); margin-bottom: 20px;"></div>
+            <p style="letter-spacing: 8px; font-weight: 300;">Portofolio 2026</p>
+        </div>
+
+        <div class="slide about-slide">
+            <div class="text-box">
+                <h2 style="font-family: 'Playfair Display'; font-size: 50px; margin-bottom: 20px; border-bottom: 4px solid var(--accent); display: inline-block;">About</h2>
+                <p id="out-about" style="line-height: 1.8; font-size: 17px; margin-bottom: 30px; color: #444;"></p>
+                <p><strong>Ta'lim:</strong> <span id="out-edu"></span></p>
+                <p><strong>Tug'ilgan sanasi:</strong> <span id="out-dob"></span></p>
+            </div>
+            <div class="img-box" id="out-p-img"></div>
+        </div>
+
+        <div id="project-slides-container"></div>
+
+        <div class="controls">
+            <button class="btn-ppt" onclick="generatePPTX()">📥 PPTX YUKLAB OLISH</button>
+            <button class="btn-ppt" style="background:#444;" onclick="location.reload()">TAHRIRLASH</button>
+        </div>
+    </div>
+
+    <script>
+        let profileImg = "";
+        let projectImages = [];
+
+        function buildPreview() {
+            document.getElementById('out-name').innerText = document.getElementById('fullname').value || "NAME";
+            document.getElementById('out-about').innerText = document.getElementById('about').value;
+            document.getElementById('out-edu').innerText = document.getElementById('edu').value;
+            document.getElementById('out-dob').innerText = document.getElementById('dob').value;
+
+            const pFile = document.getElementById('p-img').files[0];
+            if(pFile) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    profileImg = e.target.result;
+                    document.getElementById('out-p-img').innerHTML = `<img src="${profileImg}">`;
+                };
+                reader.readAsDataURL(pFile);
+            }
+
+            const projFiles = document.getElementById('proj-imgs').files;
+            projectImages = [];
+            const container = document.getElementById('project-slides-container');
+            container.innerHTML = "";
+
+            // Har bir sahifaga 2 tadan rasm joylash mantiqi (Jami 10 ta rasm = 5 sahifa)
+            const filesArray = Array.from(projFiles).slice(0, 10);
+            
+            // Rasmlarni yuklash va preview yaratish
+            let loadedCount = 0;
+            filesArray.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    projectImages[index] = e.target.result;
+                    loadedCount++;
+                    
+                    if (loadedCount === filesArray.length) {
+                        renderProjectSlides();
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            document.getElementById('input-panel').style.display = 'none';
+            document.getElementById('portfolio-view').style.display = 'block';
+        }
+
+        function renderProjectSlides() {
+            const container = document.getElementById('project-slides-container');
+            for (let i = 0; i < projectImages.length; i += 2) {
+                const pageNum = (i / 2) + 1;
+                let html = `
+                    <div class="slide proj-slide">
+                        <h2 style="font-family: 'Playfair Display'; font-size: 30px;">Projects Part ${toRoman(pageNum)}</h2>
+                        <div class="proj-grid">
+                            <div class="proj-card"><img src="${projectImages[i]}"></div>
+                            ${projectImages[i+1] ? `<div class="proj-card"><img src="${projectImages[i+1]}"></div>` : ''}
+                        </div>
+                    </div>`;
+                container.innerHTML += html;
+            }
+        }
+
+        function toRoman(num) {
+            const roman = ["I", "II", "III", "IV", "V"];
+            return roman[num - 1] || num;
+        }
+
+        function generatePPTX() {
+            let pptx = new PptxGenJS();
+            const name = document.getElementById('fullname').value || "Portfolio";
+
+            // Slayd 1: Intro
+            let s1 = pptx.addSlide();
+            s1.addText(name, { x: 0, y: '40%', w: '100%', align: 'center', fontSize: 50, bold: true });
+            s1.addText("SELECTED WORKS 2026", { x: 0, y: '55%', w: '100%', align: 'center', fontSize: 18, color: 'FF5C00' });
+
+            // Slayd 2: About
+            let s2 = pptx.addSlide();
+            s2.addText("About Me", { x: 0.5, y: 0.5, fontSize: 36, bold: true, color: 'FF5C00' });
+            s2.addText(document.getElementById('about').value, { x: 0.5, y: 1.2, w: 4.5, fontSize: 16 });
+            s2.addText(`Edu: ${document.getElementById('edu').value}\nBorn: ${document.getElementById('dob').value}`, { x: 0.5, y: 4.5, w: 4.5, fontSize: 14, bold: true });
+            if(profileImg) s2.addImage({ data: profileImg, x: 5.2, y: 0, w: 4.8, h: 5.6 });
+
+            // Loyiha slaydlari
+            for (let i = 0; i < projectImages.length; i += 2) {
+                let s = pptx.addSlide();
+                const pageNum = (i / 2) + 1;
+                s.addText(`Projects Part ${toRoman(pageNum)}`, { x: 0.5, y: 0.2, fontSize: 24, bold: true });
+                s.addImage({ data: projectImages[i], x: 0.5, y: 0.8, w: 4.4, h: 4.5 });
+                if(projectImages[i+1]) {
+                    s.addImage({ data: projectImages[i+1], x: 5.1, y: 0.8, w: 4.4, h: 4.5 });
+                }
+            }
+
+            pptx.writeFile({ fileName: `${name}_Portfolio.pptx` });
+        }
+    </script>
+</body>
+</html>

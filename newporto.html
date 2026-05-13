@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioMaker – Professional Portfolio Generator</title>
+    <meta name="description" content="Pinterest stilidagi professional portfolio yarating va PowerPoint formatida yuklab oling">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="new.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <span class="logo-text">Portfolio<span class="logo-accent">Maker</span></span>
+            </div>
+            <div class="step-indicator" id="stepIndicator">
+                <div class="step-item active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span class="step-label">Ma'lumotlar</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">Rasmlar</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">Shablon</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item" data-step="4">
+                    <div class="step-circle">4</div>
+                    <span class="step-label">Yuklab olish</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+
+        <!-- ====== STEP 1: Personal Info ====== -->
+        <section class="wizard-step active" id="step1">
+            <div class="step-container">
+                <div class="step-header">
+                    <h1 class="step-title">
+                        <span class="title-icon"><i class="fas fa-user-edit"></i></span>
+                        Shaxsiy ma'lumotlaringiz
+                    </h1>
+                    <p class="step-subtitle">Portfolingiz uchun asosiy ma'lumotlarni kiriting</p>
+                </div>
+
+                <form class="info-form" id="personalForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">
+                                <i class="fas fa-user"></i> Ism
+                            </label>
+                            <input type="text" id="firstName" placeholder="Ismingizni kiriting" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">
+                                <i class="fas fa-user-tag"></i> Familiya
+                            </label>
+                            <input type="text" id="lastName" placeholder="Familiyangizni kiriting" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">
+                                <i class="fas fa-phone"></i> Telefon raqami
+                            </label>
+                            <input type="tel" id="phone" placeholder="+998 90 123 45 67" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email (ixtiyoriy)
+                            </label>
+                            <input type="email" id="email" placeholder="email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthDay">
+                                <i class="fas fa-calendar-day"></i> Tug'ilgan kun
+                            </label>
+                            <input type="number" id="birthDay" placeholder="Kun" min="1" max="31" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthMonth">
+                                <i class="fas fa-calendar-alt"></i> Tug'ilgan oy
+                            </label>
+                            <select id="birthMonth" required>
+                                <option value="">Oyni tanlang</option>
+                                <option value="1">Yanvar</option>
+                                <option value="2">Fevral</option>
+                                <option value="3">Mart</option>
+                                <option value="4">Aprel</option>
+                                <option value="5">May</option>
+                                <option value="6">Iyun</option>
+                                <option value="7">Iyul</option>
+                                <option value="8">Avgust</option>
+                                <option value="9">Sentyabr</option>
+                                <option value="10">Oktyabr</option>
+                                <option value="11">Noyabr</option>
+                                <option value="12">Dekabr</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthYear">
+                                <i class="fas fa-calendar"></i> Tug'ilgan yil
+                            </label>
+                            <input type="number" id="birthYear" placeholder="2000" min="1950" max="2015" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profession">
+                                <i class="fas fa-briefcase"></i> Kasb / Mutaxassislik
+                            </label>
+                            <input type="text" id="profession" placeholder="Masalan: Web Designer" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="bio">
+                                <i class="fas fa-align-left"></i> Qisqacha o'zingiz haqingizda
+                            </label>
+                            <textarea id="bio" rows="3" placeholder="Qisqacha o'zingiz va tajribangiz haqida yozing..."></textarea>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="step-actions">
+                    <div></div>
+                    <button class="btn btn-primary" id="toStep2">
+                        Keyingi <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== STEP 2: Images ====== -->
+        <section class="wizard-step" id="step2">
+            <div class="step-container">
+                <div class="step-header">
+                    <h1 class="step-title">
+                        <span class="title-icon"><i class="fas fa-images"></i></span>
+                        Rasmlar va loyihalar
+                    </h1>
+                    <p class="step-subtitle">Profil rasmingizni va loyiha rasmlarini yuklang (10 tagacha)</p>
+                </div>
+
+                <!-- Profile Photo -->
+                <div class="upload-section">
+                    <h2 class="section-title"><i class="fas fa-portrait"></i> Profil rasmi</h2>
+                    <div class="profile-upload-area" id="profileUploadArea">
+                        <input type="file" id="profilePhotoInput" accept="image/*" hidden>
+                        <div class="profile-preview" id="profilePreview">
+                            <i class="fas fa-camera"></i>
+                            <span>Rasmingizni yuklang</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Images -->
+                <div class="upload-section">
+                    <h2 class="section-title"><i class="fas fa-th-large"></i> Loyihalar <span class="project-count" id="projectCount">(0/10)</span></h2>
+                    <div class="projects-container" id="projectsContainer">
+                        <!-- Project cards will be added dynamically -->
+                    </div>
+                    <button class="btn btn-add-project" id="addProjectBtn">
+                        <i class="fas fa-plus-circle"></i> Loyiha qo'shish
+                    </button>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn btn-secondary" id="backToStep1">
+                        <i class="fas fa-arrow-left"></i> Ortga
+                    </button>
+                    <button class="btn btn-primary" id="toStep3">
+                        Keyingi <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== STEP 3: Template Selection ====== -->
+        <section class="wizard-step" id="step3">
+            <div class="step-container">
+                <div class="step-header">
+                    <h1 class="step-title">
+                        <span class="title-icon"><i class="fas fa-palette"></i></span>
+                        Shablon tanlang
+                    </h1>
+                    <p class="step-subtitle">O'zingizga yoqqan portfolio stilini tanlang</p>
+                </div>
+
+                <div class="templates-grid" id="templatesGrid">
+                    <!-- Template 1: Classic Grid -->
+                    <div class="template-card" data-template="classic">
+                        <div class="template-preview template-preview-classic">
+                            <div class="tp-header">
+                                <div class="tp-avatar"></div>
+                                <div class="tp-lines">
+                                    <div class="tp-line tp-line-w60"></div>
+                                    <div class="tp-line tp-line-w40"></div>
+                                </div>
+                            </div>
+                            <div class="tp-grid tp-grid-3">
+                                <div class="tp-card"></div>
+                                <div class="tp-card"></div>
+                                <div class="tp-card"></div>
+                                <div class="tp-card"></div>
+                                <div class="tp-card"></div>
+                                <div class="tp-card"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Classic Grid</h3>
+                            <p>Toza va tartibli grid layout</p>
+                        </div>
+                        <div class="template-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Template 2: Pinterest Masonry -->
+                    <div class="template-card" data-template="pinterest">
+                        <div class="template-preview template-preview-pinterest">
+                            <div class="tp-header">
+                                <div class="tp-avatar"></div>
+                                <div class="tp-lines">
+                                    <div class="tp-line tp-line-w60"></div>
+                                    <div class="tp-line tp-line-w40"></div>
+                                </div>
+                            </div>
+                            <div class="tp-masonry">
+                                <div class="tp-card tp-card-h1"></div>
+                                <div class="tp-card tp-card-h2"></div>
+                                <div class="tp-card tp-card-h3"></div>
+                                <div class="tp-card tp-card-h1"></div>
+                                <div class="tp-card tp-card-h2"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Pinterest Masonry</h3>
+                            <p>Klassik Pinterest stagger layout</p>
+                        </div>
+                        <div class="template-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Template 3: Dark Luxury -->
+                    <div class="template-card" data-template="dark">
+                        <div class="template-preview template-preview-dark">
+                            <div class="tp-header">
+                                <div class="tp-avatar tp-avatar-gold"></div>
+                                <div class="tp-lines">
+                                    <div class="tp-line tp-line-gold tp-line-w60"></div>
+                                    <div class="tp-line tp-line-gold tp-line-w40"></div>
+                                </div>
+                            </div>
+                            <div class="tp-grid tp-grid-2">
+                                <div class="tp-card tp-card-dark"></div>
+                                <div class="tp-card tp-card-dark"></div>
+                                <div class="tp-card tp-card-dark"></div>
+                                <div class="tp-card tp-card-dark"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Dark Luxury</h3>
+                            <p>Qora fon, oltin aksent ranglar</p>
+                        </div>
+                        <div class="template-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Template 4: Neon Glow -->
+                    <div class="template-card" data-template="neon">
+                        <div class="template-preview template-preview-neon">
+                            <div class="tp-header">
+                                <div class="tp-avatar tp-avatar-neon"></div>
+                                <div class="tp-lines">
+                                    <div class="tp-line tp-line-neon tp-line-w60"></div>
+                                    <div class="tp-line tp-line-neon tp-line-w40"></div>
+                                </div>
+                            </div>
+                            <div class="tp-grid tp-grid-3">
+                                <div class="tp-card tp-card-neon"></div>
+                                <div class="tp-card tp-card-neon"></div>
+                                <div class="tp-card tp-card-neon"></div>
+                                <div class="tp-card tp-card-neon"></div>
+                                <div class="tp-card tp-card-neon"></div>
+                                <div class="tp-card tp-card-neon"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Neon Glow</h3>
+                            <p>Neon effektlar va rang o'yini</p>
+                        </div>
+                        <div class="template-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Template 5: Minimalist -->
+                    <div class="template-card" data-template="minimal">
+                        <div class="template-preview template-preview-minimal">
+                            <div class="tp-header tp-header-center">
+                                <div class="tp-avatar tp-avatar-minimal"></div>
+                                <div class="tp-lines tp-lines-center">
+                                    <div class="tp-line tp-line-minimal tp-line-w40"></div>
+                                    <div class="tp-line tp-line-minimal tp-line-w30"></div>
+                                </div>
+                            </div>
+                            <div class="tp-grid tp-grid-1">
+                                <div class="tp-card tp-card-minimal"></div>
+                                <div class="tp-card tp-card-minimal"></div>
+                                <div class="tp-card tp-card-minimal"></div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Minimalist</h3>
+                            <p>Oddiy va zamonaviy dizayn</p>
+                        </div>
+                        <div class="template-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+
+                    <!-- Template 6: Magazine -->
+                    <div class="template-card" data-template="magazine">
+                        <div class="template-preview template-preview-magazine">
+                            <div class="tp-hero"></div>
+                            <div class="tp-header tp-header-over">
+                                <div class="tp-lines">
+                                    <div class="tp-line tp-line-white tp-line-w80"></div>
+                                    <div class="tp-line tp-line-white tp-line-w40"></div>
+                                </div>
+                            </div>
+                            <div class="tp-grid tp-grid-mag">
+                                <div class="tp-card tp-card-mag-big"></div>
+                                <div class="tp-card-col">
+                                    <div class="tp-card tp-card-mag-sm"></div>
+                                    <div class="tp-card tp-card-mag-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Magazine</h3>
+                            <p>Editorial / jurnal uslubi</p>
+                        </div>
+                        <div class="template-badge">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn btn-secondary" id="backToStep2">
+                        <i class="fas fa-arrow-left"></i> Ortga
+                    </button>
+                    <button class="btn btn-primary" id="toStep4" disabled>
+                        Ko'rish <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== STEP 4: Preview & Download ====== -->
+        <section class="wizard-step" id="step4">
+            <div class="step-container step-container-wide">
+                <div class="step-header">
+                    <h1 class="step-title">
+                        <span class="title-icon"><i class="fas fa-eye"></i></span>
+                        Portfolingiz tayyor!
+                    </h1>
+                    <p class="step-subtitle">Ko'rib chiqing va PowerPoint formatida yuklab oling</p>
+                </div>
+
+                <div class="preview-actions-top">
+                    <button class="btn btn-secondary" id="backToStep3">
+                        <i class="fas fa-arrow-left"></i> Shablonni o'zgartirish
+                    </button>
+                    <button class="btn btn-download" id="downloadPptx">
+                        <i class="fas fa-file-powerpoint"></i> PowerPoint yuklash
+                    </button>
+                </div>
+
+                <!-- Portfolio Preview Container -->
+                <div class="portfolio-preview-wrapper" id="portfolioPreviewWrapper">
+                    <div class="portfolio-preview" id="portfolioPreview">
+                        <!-- Preview content will be rendered here by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">PowerPoint tayyorlanmoqda...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Muvaffaqiyatli!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
